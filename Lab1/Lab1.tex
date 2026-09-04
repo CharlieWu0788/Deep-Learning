@@ -1,0 +1,1361 @@
+\documentclass[11pt]{article}
+
+    \usepackage[breakable]{tcolorbox}
+    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
+    
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % Keep aspect ratio if custom image width or height is specified
+    \setkeys{Gin}{keepaspectratio}
+    % Maintain compatibility with old templates. Remove in nbconvert 6.0
+    \let\Oldincludegraphics\includegraphics
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionFormat{nocaption}{}
+    \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
+
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+
+    \usepackage{iftex}
+    \ifPDFTeX
+        \usepackage[T1]{fontenc}
+        \IfFileExists{alphabeta.sty}{
+              \usepackage{alphabeta}
+          }{
+              \usepackage[mathletters]{ucs}
+              \usepackage[utf8x]{inputenc}
+          }
+    \else
+        \usepackage{fontspec}
+        \usepackage{unicode-math}
+    \fi
+
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics
+                         % to support a larger range
+    \makeatletter % fix for old versions of grffile with XeLaTeX
+    \@ifpackagelater{grffile}{2019/11/01}
+    {
+      % Do nothing on new versions
+    }
+    {
+      \def\Gread@@xetex#1{%
+        \IfFileExists{"\Gin@base".bb}%
+        {\Gread@eps{\Gin@base.bb}}%
+        {\Gread@@xetex@aux#1}%
+      }
+    }
+    \makeatother
+    \usepackage[Export]{adjustbox} % Used to constrain images to a maximum size
+    \adjustboxset{max size={0.9\linewidth}{0.9\paperheight}}
+
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    % The default LaTeX title has an obnoxious amount of whitespace. By default,
+    % titling removes some of it. It also provides customization options.
+    \usepackage{titling}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage{array}     % table support for pandoc >= 2.11.3
+    \usepackage{calc}      % table minipage width calculation for pandoc >= 2.11.1
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{soul}      % strikethrough (\st) support for pandoc >= 3.0.0
+    \usepackage{mathrsfs}
+    
+
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % common color for the border for error outputs.
+    \definecolor{outerrorbackground}{HTML}{FFDFDF}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \makeatletter
+    \newsavebox\pandoc@box
+    \newcommand*\pandocbounded[1]{%
+      \sbox\pandoc@box{#1}%
+      % scaling factors for width and height
+      \Gscale@div\@tempa\textheight{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+      \Gscale@div\@tempb\linewidth{\wd\pandoc@box}%
+      % select the smaller of both
+      \ifdim\@tempb\p@<\@tempa\p@
+        \let\@tempa\@tempb
+      \fi
+      % scaling accordingly (\@tempa < 1)
+      \ifdim\@tempa\p@<\p@
+        \scalebox{\@tempa}{\usebox\pandoc@box}%
+      % scaling not needed, use as it is
+      \else
+        \usebox{\pandoc@box}%
+      \fi
+    }
+    \makeatother
+
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{Lab1}
+    
+    
+    
+    
+    
+    
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\@namedef{PY@tok@w}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\@namedef{PY@tok@c}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cp}{\def\PY@tc##1{\textcolor[rgb]{0.61,0.40,0.00}{##1}}}
+\@namedef{PY@tok@k}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kp}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kt}{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\@namedef{PY@tok@o}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@ow}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\@namedef{PY@tok@nb}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@nf}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@nc}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@nn}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@ne}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.80,0.25,0.22}{##1}}}
+\@namedef{PY@tok@nv}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@no}{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\@namedef{PY@tok@nl}{\def\PY@tc##1{\textcolor[rgb]{0.46,0.46,0.00}{##1}}}
+\@namedef{PY@tok@ni}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.44,0.44,0.44}{##1}}}
+\@namedef{PY@tok@na}{\def\PY@tc##1{\textcolor[rgb]{0.41,0.47,0.13}{##1}}}
+\@namedef{PY@tok@nt}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@nd}{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\@namedef{PY@tok@s}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sd}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@si}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.64,0.35,0.47}{##1}}}
+\@namedef{PY@tok@se}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.36,0.12}{##1}}}
+\@namedef{PY@tok@sr}{\def\PY@tc##1{\textcolor[rgb]{0.64,0.35,0.47}{##1}}}
+\@namedef{PY@tok@ss}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@sx}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@m}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@gh}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\@namedef{PY@tok@gu}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\@namedef{PY@tok@gd}{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\@namedef{PY@tok@gi}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.52,0.00}{##1}}}
+\@namedef{PY@tok@gr}{\def\PY@tc##1{\textcolor[rgb]{0.89,0.00,0.00}{##1}}}
+\@namedef{PY@tok@ge}{\let\PY@it=\textit}
+\@namedef{PY@tok@gs}{\let\PY@bf=\textbf}
+\@namedef{PY@tok@ges}{\let\PY@bf=\textbf\let\PY@it=\textit}
+\@namedef{PY@tok@gp}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\@namedef{PY@tok@go}{\def\PY@tc##1{\textcolor[rgb]{0.44,0.44,0.44}{##1}}}
+\@namedef{PY@tok@gt}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\@namedef{PY@tok@err}{\def\PY@bc##1{{\setlength{\fboxsep}{\string -\fboxrule}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}}
+\@namedef{PY@tok@kc}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kd}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kn}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kr}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@bp}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@fm}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@vc}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vg}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vi}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vm}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@sa}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sb}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sc}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@dl}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@s2}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sh}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@s1}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@mb}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mf}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mh}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mi}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@il}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mo}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@ch}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cm}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cpf}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@c1}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cs}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb.
+    \makeatletter
+        \newbox\Wrappedcontinuationbox
+        \newbox\Wrappedvisiblespacebox
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}}
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}}
+        \newcommand*\Wrappedcontinuationindent {3ex }
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox}
+        % Take advantage of the already applied Pygments mark-up to insert
+        % potential linebreaks for TeX processing.
+        %        {, <, #, %, $, ' and ": go to next line.
+        %        _, }, ^, &, >, - and ~: stay at end of broken line.
+        % Use of \textquotesingle for straight quote.
+        \newcommand*\Wrappedbreaksatspecials {%
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}%
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}%
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}%
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}%
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}%
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}%
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}%
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}%
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}%
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}%
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}%
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}%
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}%
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}%
+        }
+        % Some characters . , ; ? ! / are not pygmentized.
+        % This macro makes them "active" and they will insert potential linebreaks
+        \newcommand*\Wrappedbreaksatpunct {%
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}%
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}%
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}%
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}%
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}%
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}%
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}%
+            \catcode`\.\active
+            \catcode`\,\active
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active
+            \lccode`\~`\~
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+
+    % prompt
+    \makeatletter
+    \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+    \makeatother
+    \newcommand{\prompt}[4]{
+        {\ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}}
+    }
+    
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+\begin{document}
+    
+    \maketitle
+    
+    
+
+    
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{1}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{torch}
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{time}
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{numpy}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{np}
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{plt}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{PyTorch version: }\PY{l+s+si}{\PYZob{}}\PY{n}{torch}\PY{o}{.}\PY{n}{\PYZus{}\PYZus{}version\PYZus{}\PYZus{}}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{CUDA available: }\PY{l+s+si}{\PYZob{}}\PY{n}{torch}\PY{o}{.}\PY{n}{cuda}\PY{o}{.}\PY{n}{is\PYZus{}available}\PY{p}{(}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{MPS available: }\PY{l+s+si}{\PYZob{}}\PY{n}{torch}\PY{o}{.}\PY{n}{backends}\PY{o}{.}\PY{n}{mps}\PY{o}{.}\PY{n}{is\PYZus{}available}\PY{p}{(}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Determine the best available device}
+\PY{k}{if} \PY{n}{torch}\PY{o}{.}\PY{n}{cuda}\PY{o}{.}\PY{n}{is\PYZus{}available}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n}{device} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{device}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cuda}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+    \PY{n}{device\PYZus{}name} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{cuda}\PY{o}{.}\PY{n}{get\PYZus{}device\PYZus{}name}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Using CUDA device: }\PY{l+s+si}{\PYZob{}}\PY{n}{device\PYZus{}name}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{k}{elif} \PY{n}{torch}\PY{o}{.}\PY{n}{backends}\PY{o}{.}\PY{n}{mps}\PY{o}{.}\PY{n}{is\PYZus{}available}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+    \PY{n}{device} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{device}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{mps}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+    \PY{n}{device\PYZus{}name} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Apple Silicon (MPS)}\PY{l+s+s2}{\PYZdq{}}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Using MPS device: }\PY{l+s+si}{\PYZob{}}\PY{n}{device\PYZus{}name}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{k}{else}\PY{p}{:}
+    \PY{n}{device} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{device}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cpu}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+    \PY{n}{device\PYZus{}name} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{CPU only}\PY{l+s+s2}{\PYZdq{}}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{No GPU available, using CPU}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{WARNING: Please use Google Colab for this assignment!}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+PyTorch version: 2.10.0+cu130
+CUDA available: True
+MPS available: False
+Using CUDA device: NVIDIA GeForce RTX 4060 Laptop GPU
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{2}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{create\PYZus{}matrices}\PY{p}{(}\PY{n}{size}\PY{p}{,} \PY{n}{device}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+\PY{l+s+sd}{    Create two random matrices of shape (size, size).}
+
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        size: The dimension of the square matrices.}
+\PY{l+s+sd}{        device: The device to create tensors on (\PYZsq{}cpu\PYZsq{}, \PYZsq{}cuda\PYZsq{}, or \PYZsq{}mps\PYZsq{}).}
+
+\PY{l+s+sd}{    Returns:}
+\PY{l+s+sd}{        Two PyTorch tensors on the specified device.}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{A} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{randn}\PY{p}{(}\PY{n}{size}\PY{p}{,} \PY{n}{size}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n}{torch}\PY{o}{.}\PY{n}{float32}\PY{p}{,} \PY{n}{device}\PY{o}{=}\PY{n}{device}\PY{p}{)}
+    \PY{n}{B} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{randn}\PY{p}{(}\PY{n}{size}\PY{p}{,} \PY{n}{size}\PY{p}{,} \PY{n}{dtype}\PY{o}{=}\PY{n}{torch}\PY{o}{.}\PY{n}{float32}\PY{p}{,} \PY{n}{device}\PY{o}{=}\PY{n}{device}\PY{p}{)}
+    
+    \PY{k}{return} \PY{n}{A}\PY{p}{,} \PY{n}{B}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{3}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{size} \PY{o}{=} \PY{l+m+mi}{1000}
+
+\PY{n}{A\PYZus{}cpu}\PY{p}{,} \PY{n}{B\PYZus{}cpu} \PY{o}{=} \PY{n}{create\PYZus{}matrices}\PY{p}{(}\PY{n}{size}\PY{p}{,} \PY{n}{torch}\PY{o}{.}\PY{n}{device}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cpu}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Matrix A shape: }\PY{l+s+si}{\PYZob{}}\PY{n}{A\PYZus{}cpu}\PY{o}{.}\PY{n}{shape}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Matrix A device: }\PY{l+s+si}{\PYZob{}}\PY{n}{A\PYZus{}cpu}\PY{o}{.}\PY{n}{device}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Matrix A dtype: }\PY{l+s+si}{\PYZob{}}\PY{n}{A\PYZus{}cpu}\PY{o}{.}\PY{n}{dtype}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Matrix A shape: torch.Size([1000, 1000])
+Matrix A device: cpu
+Matrix A dtype: torch.float32
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{4}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{benchmark\PYZus{}matmul}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{B}\PY{p}{)}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+\PY{l+s+sd}{    Benchmark matrix multiplication with proper synchronization.}
+
+\PY{l+s+sd}{    Args:}
+\PY{l+s+sd}{        A, B: Input matrices}
+
+\PY{l+s+sd}{    Returns:}
+\PY{l+s+sd}{        Execution time in milliseconds}
+\PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{n}{device} \PY{o}{=} \PY{n}{A}\PY{o}{.}\PY{n}{device}
+
+    \PY{c+c1}{\PYZsh{} Synchronize before timing}
+    \PY{k}{if} \PY{n}{device}\PY{o}{.}\PY{n}{type} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cuda}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+        \PY{n}{torch}\PY{o}{.}\PY{n}{cuda}\PY{o}{.}\PY{n}{synchronize}\PY{p}{(}\PY{p}{)}
+    \PY{k}{elif} \PY{n}{device}\PY{o}{.}\PY{n}{type} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{mps}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+        \PY{n}{torch}\PY{o}{.}\PY{n}{mps}\PY{o}{.}\PY{n}{synchronize}\PY{p}{(}\PY{p}{)}
+
+    \PY{n}{start} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{perf\PYZus{}counter}\PY{p}{(}\PY{p}{)}
+
+    \PY{n}{C} \PY{o}{=} \PY{n}{torch}\PY{o}{.}\PY{n}{mm}\PY{p}{(}\PY{n}{A}\PY{p}{,} \PY{n}{B}\PY{p}{)}
+
+    \PY{c+c1}{\PYZsh{} Synchronize after operation}
+    \PY{k}{if} \PY{n}{device}\PY{o}{.}\PY{n}{type} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cuda}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+        \PY{n}{torch}\PY{o}{.}\PY{n}{cuda}\PY{o}{.}\PY{n}{synchronize}\PY{p}{(}\PY{p}{)}
+    \PY{k}{elif} \PY{n}{device}\PY{o}{.}\PY{n}{type} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{mps}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+        \PY{n}{torch}\PY{o}{.}\PY{n}{mps}\PY{o}{.}\PY{n}{synchronize}\PY{p}{(}\PY{p}{)}
+
+    \PY{n}{end} \PY{o}{=} \PY{n}{time}\PY{o}{.}\PY{n}{perf\PYZus{}counter}\PY{p}{(}\PY{p}{)}
+
+    \PY{k}{return} \PY{p}{(}\PY{n}{end} \PY{o}{\PYZhy{}} \PY{n}{start}\PY{p}{)} \PY{o}{*} \PY{l+m+mi}{1000}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Matrix sizes to test}
+\PY{n}{sizes} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{512}\PY{p}{,} \PY{l+m+mi}{1024}\PY{p}{,} \PY{l+m+mi}{2048}\PY{p}{,} \PY{l+m+mi}{4096}\PY{p}{,} \PY{l+m+mi}{8192}\PY{p}{]}
+
+\PY{c+c1}{\PYZsh{} Store results}
+\PY{n}{results} \PY{o}{=} \PY{p}{\PYZob{}}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sizes}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{n}{sizes}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cpu\PYZus{}times}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{[}\PY{p}{]}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{gpu\PYZus{}times}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{[}\PY{p}{]}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{speedups}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{[}\PY{p}{]}
+\PY{p}{\PYZcb{}}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{=}\PY{l+s+s2}{\PYZdq{}} \PY{o}{*} \PY{l+m+mi}{60}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Size}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{:}\PY{l+s+s2}{\PYZgt{}8}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ | }\PY{l+s+si}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CPU (ms)}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{:}\PY{l+s+s2}{\PYZgt{}12}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ | }\PY{l+s+si}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GPU (ms)}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{:}\PY{l+s+s2}{\PYZgt{}12}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ | }\PY{l+s+si}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Speedup}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{:}\PY{l+s+s2}{\PYZgt{}10}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{=}\PY{l+s+s2}{\PYZdq{}} \PY{o}{*} \PY{l+m+mi}{60}\PY{p}{)}
+
+\PY{k}{for} \PY{n}{size} \PY{o+ow}{in} \PY{n}{sizes}\PY{p}{:}
+    \PY{c+c1}{\PYZsh{} CPU benchmark}
+    \PY{n}{A\PYZus{}cpu}\PY{p}{,} \PY{n}{B\PYZus{}cpu} \PY{o}{=} \PY{n}{create\PYZus{}matrices}\PY{p}{(}\PY{n}{size}\PY{p}{,} \PY{n}{torch}\PY{o}{.}\PY{n}{device}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cpu}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{)}
+    \PY{n}{cpu\PYZus{}time} \PY{o}{=} \PY{n}{benchmark\PYZus{}matmul}\PY{p}{(}\PY{n}{A\PYZus{}cpu}\PY{p}{,} \PY{n}{B\PYZus{}cpu}\PY{p}{)}
+
+    \PY{c+c1}{\PYZsh{} GPU benchmark}
+    \PY{n}{A\PYZus{}gpu}\PY{p}{,} \PY{n}{B\PYZus{}gpu} \PY{o}{=} \PY{n}{create\PYZus{}matrices}\PY{p}{(}\PY{n}{size}\PY{p}{,} \PY{n}{device}\PY{p}{)}
+    \PY{n}{gpu\PYZus{}time} \PY{o}{=} \PY{n}{benchmark\PYZus{}matmul}\PY{p}{(}\PY{n}{A\PYZus{}gpu}\PY{p}{,} \PY{n}{B\PYZus{}gpu}\PY{p}{)}
+
+    \PY{c+c1}{\PYZsh{} Calculate speedup}
+    \PY{n}{speedup} \PY{o}{=} \PY{n}{cpu\PYZus{}time} \PY{o}{/} \PY{n}{gpu\PYZus{}time}
+
+    \PY{c+c1}{\PYZsh{} Store results}
+    \PY{n}{results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cpu\PYZus{}times}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{cpu\PYZus{}time}\PY{p}{)}
+    \PY{n}{results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{gpu\PYZus{}times}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{gpu\PYZus{}time}\PY{p}{)}
+    \PY{n}{results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{speedups}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{speedup}\PY{p}{)}
+
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{size}\PY{l+s+si}{:}\PY{l+s+s2}{\PYZgt{}8}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ | }\PY{l+s+si}{\PYZob{}}\PY{n}{cpu\PYZus{}time}\PY{l+s+si}{:}\PY{l+s+s2}{\PYZgt{}10.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ms | }\PY{l+s+si}{\PYZob{}}\PY{n}{gpu\PYZus{}time}\PY{l+s+si}{:}\PY{l+s+s2}{\PYZgt{}10.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ms | }\PY{l+s+si}{\PYZob{}}\PY{n}{speedup}\PY{l+s+si}{:}\PY{l+s+s2}{\PYZgt{}9.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{x}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{=}\PY{l+s+s2}{\PYZdq{}} \PY{o}{*} \PY{l+m+mi}{60}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+============================================================
+    Size |     CPU (ms) |     GPU (ms) |    Speedup
+============================================================
+     512 |       3.03ms |      56.67ms |      0.05x
+    1024 |       4.69ms |       1.70ms |      2.76x
+    2048 |      31.06ms |       3.18ms |      9.76x
+    4096 |     259.69ms |      21.82ms |     11.90x
+    8192 |    1709.29ms |     151.94ms |     11.25x
+============================================================
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{6}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{fig}\PY{p}{,} \PY{n}{axes} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{subplots}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{14}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Plot 1: Execution times}
+\PY{n}{ax1} \PY{o}{=} \PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+\PY{n}{x} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{sizes}\PY{p}{)}\PY{p}{)}
+\PY{n}{width} \PY{o}{=} \PY{l+m+mf}{0.35}
+
+\PY{n}{bars1} \PY{o}{=} \PY{n}{ax1}\PY{o}{.}\PY{n}{bar}\PY{p}{(}
+    \PY{n}{x} \PY{o}{\PYZhy{}} \PY{n}{width} \PY{o}{/} \PY{l+m+mi}{2}\PY{p}{,}
+    \PY{n}{results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cpu\PYZus{}times}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}
+    \PY{n}{width}\PY{p}{,}
+    \PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{CPU}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+    \PY{n}{color}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{steelblue}\PY{l+s+s2}{\PYZdq{}}
+\PY{p}{)}
+
+\PY{n}{bars2} \PY{o}{=} \PY{n}{ax1}\PY{o}{.}\PY{n}{bar}\PY{p}{(}
+    \PY{n}{x} \PY{o}{+} \PY{n}{width} \PY{o}{/} \PY{l+m+mi}{2}\PY{p}{,}
+    \PY{n}{results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{gpu\PYZus{}times}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}
+    \PY{n}{width}\PY{p}{,}
+    \PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{GPU}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+    \PY{n}{color}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{coral}\PY{l+s+s2}{\PYZdq{}}
+\PY{p}{)}
+
+\PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Matrix Size (N x N)}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Time (milliseconds)}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Matrix Multiplication: CPU vs GPU Execution Time}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}xticks}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+\PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}xticklabels}\PY{p}{(}\PY{p}{[}\PY{n+nb}{str}\PY{p}{(}\PY{n}{s}\PY{p}{)} \PY{k}{for} \PY{n}{s} \PY{o+ow}{in} \PY{n}{sizes}\PY{p}{]}\PY{p}{)}
+\PY{n}{ax1}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+\PY{n}{ax1}\PY{o}{.}\PY{n}{set\PYZus{}yscale}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{log}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{ax1}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.3}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Plot 2: Speedup}
+\PY{n}{ax2} \PY{o}{=} \PY{n}{axes}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+\PY{n}{ax2}\PY{o}{.}\PY{n}{plot}\PY{p}{(}
+    \PY{n}{sizes}\PY{p}{,}
+    \PY{n}{results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{speedups}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{go\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+    \PY{n}{linewidth}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,}
+    \PY{n}{markersize}\PY{o}{=}\PY{l+m+mi}{10}
+\PY{p}{)}
+
+\PY{n}{ax2}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}
+    \PY{n}{y}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}
+    \PY{n}{color}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{r}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+    \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZhy{}\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+    \PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{No speedup (1x)}\PY{l+s+s2}{\PYZdq{}}
+\PY{p}{)}
+
+\PY{n}{ax2}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Matrix Size (N x N)}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{ax2}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Speedup (CPU time / GPU time)}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{ax2}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{GPU Speedup Factor vs Matrix Size}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{ax2}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.3}\PY{p}{)}
+\PY{n}{ax2}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cpu\PYZus{}vs\PYZus{}gpu\PYZus{}benchmark.png}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{150}\PY{p}{,} \PY{n}{bbox\PYZus{}inches}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{tight}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Lab1_files/Lab1_5_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \section{1. Maximum Speedup}\label{maximum-speedup}
+
+The maximum speedup I observed was \textbf{14.81×}, which occurred at a
+matrix size of \textbf{4096 × 4096}.
+
+At this size, the CPU took \textbf{282.62 ms}, while the GPU took
+\textbf{19.08 ms}.
+
+The speedup was calculated as:
+
+\[
+\text{Speedup} = \frac{\text{CPU time}}{\text{GPU time}}
+= \frac{282.62}{19.08}
+\approx 14.81\times
+\]
+
+    \section{\texorpdfstring{2. Why is \texttt{synchronize()}
+Necessary?}{2. Why is synchronize() Necessary?}}\label{why-is-synchronize-necessary}
+
+GPU operations in PyTorch are generally executed asynchronously. When
+the CPU launches a GPU operation such as \texttt{torch.mm()}, it can
+continue executing without waiting for the GPU operation to finish.
+
+The \texttt{torch.cuda.synchronize()} call forces the CPU to wait until
+all previously issued CUDA operations have completed. Therefore, placing
+\texttt{synchronize()} before and after the matrix multiplication allows
+\texttt{time.perf\_counter()} to measure the actual GPU execution time.
+
+Without synchronization, the measured time could be much shorter than
+the actual computation time because the CPU timer might stop before the
+GPU has finished the matrix multiplication. This would make the GPU
+appear artificially faster and result in an inaccurate speedup
+measurement.
+
+    \section{3. GPU Architecture and Performance
+Hypothesis}\label{gpu-architecture-and-performance-hypothesis}
+
+My GPU is an NVIDIA GeForce RTX 4060 Laptop GPU, based on the NVIDIA Ada
+Lovelace architecture. The RTX 4060 Laptop GPU has 3,072 CUDA cores, 8
+GB of GDDR6 memory, and a 128-bit memory interface. NVIDIA specifies a
+boost-clock range of 1470--2370 MHz and a GPU subsystem power range of
+35--115 W, depending on the laptop implementation.
+
+The Ada Lovelace architecture introduces several specialized hardware
+components. These include third-generation RT Cores for ray tracing and
+fourth-generation Tensor Cores for AI and tensor-based workloads. It
+also features updated Streaming Multiprocessors (SMs) and enhanced CUDA
+cores. NVIDIA states that the Ada architecture provides up to twice the
+performance and power efficiency of the previous generation in its new
+Streaming Multiprocessors, while its CUDA cores provide significantly
+improved single-precision (FP32) processing performance.
+
+For this experiment, the CUDA cores and their FP32 computing capability
+are the most relevant parts of the architecture, because the benchmark
+uses PyTorch's torch.mm() to perform matrix multiplication with float32
+tensors. The RT Cores and Tensor Cores are important components of the
+RTX 4060 Laptop GPU, but they are not the primary hardware being
+evaluated by this particular FP32 matrix-multiplication benchmark.
+
+\subsection{3.1 Official vs.~Real-Time GPU
+Specifications}\label{official-vs.-real-time-gpu-specifications}
+
+To better understand my benchmark results, I compared the official
+specifications of the NVIDIA GeForce RTX 4060 Laptop GPU with the
+hardware information reported by ROG GPU-Z and ROG CPU-Z on my system.
+
+{\def\LTcaptype{table} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Specification
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+NVIDIA Official RTX 4060 Laptop GPU
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+GPU-Z / CPU-Z Real-Time Reading
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Notes
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Architecture & Ada Lovelace & Ada Lovelace (AD107) & Same
+architecture \\
+CUDA Cores & 3,072 & 3,072 & Matches official specification \\
+Boost Clock & 1470--2370 MHz & \textasciitilde2300 MHz (GPU-Z Boost) /
+\textasciitilde2250 MHz (CPU-Z) & Within official range \\
+Memory & 8 GB GDDR6 & 8 GB GDDR6 (Hynix) & Matches \\
+Memory Bus Width & 128-bit & 128-bit & Matches \\
+Memory Bandwidth & Up to 272 GB/s & 259.2 GB/s & Depends on actual
+memory clock \\
+GPU Subsystem Power & 35--115 W & 80 W TDP (CPU-Z) & Within official
+range \\
+GPU Chip & --- & AD107, Revision A1 & Specific chip information \\
+Die Size & \textasciitilde159 mm² & 159 mm² & Matches \\
+Transistors & \textasciitilde18.9 billion & 18,900M & Matches \\
+ROPs / TMUs & --- & 48 / 96 & GPU-Z reading \\
+Bus Interface & PCIe 4.0 x8 & PCIe 4.0 x8 & Matches \\
+Resizable BAR & Supported & Enabled & Enabled on my system \\
+\end{longtable}
+}
+
+The GPU-Z and CPU-Z readings are generally consistent with NVIDIA's
+official specifications while providing additional information about the
+specific GPU installed in my laptop. Some values, such as clock speed,
+memory bandwidth, and power-related readings, can vary dynamically
+depending on the laptop's operating conditions and configuration. The
+\textbf{259.2 GB/s} bandwidth shown by GPU-Z reflects the actual
+memory-clock configuration observed on my system, while the \textbf{80
+W} value reported by CPU-Z is a TDP value rather than a direct
+measurement of instantaneous GPU power consumption.
+
+\subsection{3.2 Benchmark Configuration and
+Monitoring}\label{benchmark-configuration-and-monitoring}
+
+During the benchmark, I used \textbf{ROG GPU-Z 2.70.0} and \textbf{ROG
+CPU-Z 2.20.2} to monitor and cross-check the GPU's hardware and
+operating information. The benchmark was performed using \textbf{Armoury
+Crate in Enhanced mode}.
+
+{\def\LTcaptype{table} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Configuration / Monitoring Item
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Setting / Reading
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Armoury Crate Performance Mode & Enhanced \\
+Armoury Crate Manual CPU Processor Base Power Boost/Maximum Turbo Power
+Boost & Not used \\
+Armoury Crate Manual GPU Base Clock Offset/Memory Clock Offset/Dynamic
+Boost & Not used \\
+Armoury Crate Termal Target Fan Boost & Not used \\
+NVIDIA Control Panel Automatic GPU Overclocking & Not used \\
+GPU Monitoring & ROG GPU-Z 2.70.0 \\
+CPU/GPU Hardware Cross-Check & ROG CPU-Z 2.20.2 \\
+GPU & NVIDIA GeForce RTX 4060 Laptop GPU \\
+NVIDIA Driver & GameReady 616.56 \\
+Benchmark Data Type & FP32 matrix multiplication \\
+\end{longtable}
+}
+
+The benchmark was therefore performed without my usual manual CPU/GPU
+overclocking settings or NVIDIA Control Panel automatic GPU
+overclocking. \textbf{Enhanced mode} was used to provide the laptop's
+standard performance-oriented configuration while keeping the experiment
+consistent. GPU-Z and CPU-Z were used to observe and cross-check the
+hardware configuration and operating parameters during the experiment.
+
+\subsection{3.3 Performance Hypothesis}\label{performance-hypothesis}
+
+The architecture and configuration of my RTX 4060 Laptop GPU help
+explain the performance pattern observed in the benchmark. The GPU has
+\textbf{3,072 CUDA cores} and is designed to perform a large number of
+operations in parallel. NVIDIA also specifies a \textbf{35--115 W GPU
+subsystem power range} for the RTX 4060 Laptop GPU, meaning that actual
+performance can depend on the particular laptop implementation and its
+operating conditions.
+
+My benchmark results were:
+
+{\def\LTcaptype{table} % do not increment counter
+\begin{longtable}[]{@{}rrrr@{}}
+\toprule\noalign{}
+Matrix Size & CPU (ms) & GPU (ms) & Speedup \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+512 × 512 & 7.85 & 88.18 & 0.09× \\
+1024 × 1024 & 4.94 & 1.65 & 2.99× \\
+2048 × 2048 & 32.32 & 3.84 & 8.41× \\
+4096 × 4096 & 282.62 & 19.08 & \textbf{14.81×} \\
+8192 × 8192 & 1774.72 & 153.96 & 11.53× \\
+\end{longtable}
+}
+
+For the smallest matrix size, \textbf{512 × 512}, the GPU was slower
+than the CPU. I hypothesize that the amount of parallel computation was
+too small to fully utilize the GPU, while fixed GPU overhead, such as
+launching and scheduling the CUDA operation, represented a relatively
+large portion of the total execution time.
+
+As the matrix size increased, the amount of parallel work increased
+substantially. This allowed the GPU to utilize its CUDA cores more
+effectively, resulting in a rapid increase in speedup from \textbf{2.99×
+at 1024 × 1024} to \textbf{8.41× at 2048 × 2048} and finally
+\textbf{14.81× at 4096 × 4096}. This behavior is consistent with the
+GPU's architecture being well suited to highly parallel
+matrix-multiplication workloads.
+
+At \textbf{8192 × 8192}, the GPU was still significantly faster than the
+CPU, but the speedup decreased from \textbf{14.81× to 11.53×}. I
+hypothesize that the larger workload introduces additional limitations
+such as memory traffic, memory-hierarchy effects, kernel selection, and
+the laptop GPU's power and thermal constraints. However, the benchmark
+alone does not identify one specific bottleneck, so these should be
+considered hypotheses rather than confirmed causes.
+
+Overall, my results suggest that GPU acceleration becomes increasingly
+beneficial as the amount of parallel computation grows, but the speedup
+does not increase indefinitely. The maximum speedup in this experiment
+was \textbf{14.81× at 4096 × 4096}, while the GPU remained approximately
+\textbf{11.5× faster} than the CPU at 8192 × 8192.
+
+    \section{4. Expected Results with a Larger
+GPU}\label{expected-results-with-a-larger-gpu}
+
+If I had a much larger GPU with more memory and compute cores, I would
+expect the GPU to achieve higher performance, especially for the larger
+matrix sizes.
+
+For small matrices, such as \textbf{512 × 512}, the speedup might not
+improve significantly because GPU launch and scheduling overhead would
+still represent a relatively large portion of the total execution time.
+
+For larger matrices, the additional compute cores would provide more
+parallel processing capacity, while the larger memory capacity would
+allow larger workloads to be handled more comfortably. I would therefore
+expect the GPU execution time to decrease and the speedup over the CPU
+to increase, particularly for matrix sizes such as \textbf{4096 × 4096}
+and \textbf{8192 × 8192}.
+
+A larger GPU could also reduce some of the limitations observed at
+\textbf{8192 × 8192}. However, the speedup would not necessarily scale
+linearly with the number of compute cores or the amount of memory,
+because performance can also be limited by memory bandwidth, memory
+access patterns, kernel efficiency, and other system factors.
+
+Overall, I would expect a larger GPU to provide greater acceleration for
+sufficiently large and parallel workloads, while providing relatively
+little additional benefit for very small matrix operations.
+
+    \section{Bonus: Finding the Speedup
+Threshold}\label{bonus-finding-the-speedup-threshold}
+
+\subsection{Bonus 1: Finding the Crossover
+Point}\label{bonus-1-finding-the-crossover-point}
+
+The goal of this experiment is to determine approximately when GPU
+acceleration becomes beneficial compared with CPU execution.
+
+For very small matrices, GPU overhead can exceed the computational
+savings. I therefore tested matrix sizes from 16 × 16 through 1024 ×
+1024 and compared CPU and GPU execution times.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{7}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Bonus 1: Test small to moderate matrix sizes}
+
+\PY{n}{small\PYZus{}sizes} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{16}\PY{p}{,} \PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{64}\PY{p}{,} \PY{l+m+mi}{128}\PY{p}{,} \PY{l+m+mi}{192}\PY{p}{,} \PY{l+m+mi}{256}\PY{p}{,} \PY{l+m+mi}{384}\PY{p}{,} \PY{l+m+mi}{512}\PY{p}{,} \PY{l+m+mi}{768}\PY{p}{,} \PY{l+m+mi}{1024}\PY{p}{]}
+
+\PY{n}{bonus\PYZus{}small\PYZus{}results} \PY{o}{=} \PY{p}{\PYZob{}}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sizes}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{[}\PY{p}{]}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cpu\PYZus{}times}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{[}\PY{p}{]}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{gpu\PYZus{}times}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{[}\PY{p}{]}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{speedups}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{[}\PY{p}{]}
+\PY{p}{\PYZcb{}}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{=}\PY{l+s+s2}{\PYZdq{}} \PY{o}{*} \PY{l+m+mi}{60}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Size}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{:}\PY{l+s+s2}{\PYZgt{}8}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ | }\PY{l+s+si}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CPU (ms)}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{:}\PY{l+s+s2}{\PYZgt{}12}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ | }\PY{l+s+si}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GPU (ms)}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{:}\PY{l+s+s2}{\PYZgt{}12}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ | }\PY{l+s+si}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Speedup}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{:}\PY{l+s+s2}{\PYZgt{}10}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{=}\PY{l+s+s2}{\PYZdq{}} \PY{o}{*} \PY{l+m+mi}{60}\PY{p}{)}
+
+\PY{k}{for} \PY{n}{size} \PY{o+ow}{in} \PY{n}{small\PYZus{}sizes}\PY{p}{:}
+    \PY{c+c1}{\PYZsh{} CPU benchmark}
+    \PY{n}{A\PYZus{}cpu}\PY{p}{,} \PY{n}{B\PYZus{}cpu} \PY{o}{=} \PY{n}{create\PYZus{}matrices}\PY{p}{(}\PY{n}{size}\PY{p}{,} \PY{n}{torch}\PY{o}{.}\PY{n}{device}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cpu}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{)}
+    \PY{n}{cpu\PYZus{}time} \PY{o}{=} \PY{n}{benchmark\PYZus{}matmul}\PY{p}{(}\PY{n}{A\PYZus{}cpu}\PY{p}{,} \PY{n}{B\PYZus{}cpu}\PY{p}{)}
+
+    \PY{c+c1}{\PYZsh{} GPU benchmark}
+    \PY{n}{A\PYZus{}gpu}\PY{p}{,} \PY{n}{B\PYZus{}gpu} \PY{o}{=} \PY{n}{create\PYZus{}matrices}\PY{p}{(}\PY{n}{size}\PY{p}{,} \PY{n}{device}\PY{p}{)}
+    \PY{n}{gpu\PYZus{}time} \PY{o}{=} \PY{n}{benchmark\PYZus{}matmul}\PY{p}{(}\PY{n}{A\PYZus{}gpu}\PY{p}{,} \PY{n}{B\PYZus{}gpu}\PY{p}{)}
+
+    \PY{c+c1}{\PYZsh{} Calculate speedup}
+    \PY{n}{speedup} \PY{o}{=} \PY{n}{cpu\PYZus{}time} \PY{o}{/} \PY{n}{gpu\PYZus{}time}
+
+    \PY{c+c1}{\PYZsh{} Store results}
+    \PY{n}{bonus\PYZus{}small\PYZus{}results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sizes}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{size}\PY{p}{)}
+    \PY{n}{bonus\PYZus{}small\PYZus{}results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cpu\PYZus{}times}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{cpu\PYZus{}time}\PY{p}{)}
+    \PY{n}{bonus\PYZus{}small\PYZus{}results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{gpu\PYZus{}times}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{gpu\PYZus{}time}\PY{p}{)}
+    \PY{n}{bonus\PYZus{}small\PYZus{}results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{speedups}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{speedup}\PY{p}{)}
+
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{size}\PY{l+s+si}{:}\PY{l+s+s2}{\PYZgt{}8}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ | }\PY{l+s+si}{\PYZob{}}\PY{n}{cpu\PYZus{}time}\PY{l+s+si}{:}\PY{l+s+s2}{\PYZgt{}10.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ms | }\PY{l+s+si}{\PYZob{}}\PY{n}{gpu\PYZus{}time}\PY{l+s+si}{:}\PY{l+s+s2}{\PYZgt{}10.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ms | }\PY{l+s+si}{\PYZob{}}\PY{n}{speedup}\PY{l+s+si}{:}\PY{l+s+s2}{\PYZgt{}9.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{x}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{=}\PY{l+s+s2}{\PYZdq{}} \PY{o}{*} \PY{l+m+mi}{60}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Find the first matrix size where GPU becomes faster than CPU}
+\PY{n}{crossover\PYZus{}size} \PY{o}{=} \PY{k+kc}{None}
+
+\PY{k}{for} \PY{n}{size}\PY{p}{,} \PY{n}{speedup} \PY{o+ow}{in} \PY{n+nb}{zip}\PY{p}{(}
+    \PY{n}{bonus\PYZus{}small\PYZus{}results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sizes}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}
+    \PY{n}{bonus\PYZus{}small\PYZus{}results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{speedups}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+\PY{p}{)}\PY{p}{:}
+    \PY{k}{if} \PY{n}{speedup} \PY{o}{\PYZgt{}} \PY{l+m+mf}{1.0}\PY{p}{:}
+        \PY{n}{crossover\PYZus{}size} \PY{o}{=} \PY{n}{size}
+        \PY{k}{break}
+
+\PY{k}{if} \PY{n}{crossover\PYZus{}size} \PY{o+ow}{is} \PY{o+ow}{not} \PY{k+kc}{None}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{Approximate crossover point: }\PY{l+s+si}{\PYZob{}}\PY{n}{crossover\PYZus{}size}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ x }\PY{l+s+si}{\PYZob{}}\PY{n}{crossover\PYZus{}size}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{k}{else}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{No crossover point found in the tested range.}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+============================================================
+    Size |     CPU (ms) |     GPU (ms) |    Speedup
+============================================================
+      16 |       0.08ms |       4.18ms |      0.02x
+      32 |       0.03ms |       8.53ms |      0.00x
+      64 |       0.17ms |       0.17ms |      1.01x
+     128 |       0.05ms |       0.23ms |      0.21x
+     192 |       0.08ms |       0.12ms |      0.68x
+     256 |       0.11ms |       0.10ms |      1.10x
+     384 |       0.27ms |       0.28ms |      0.97x
+     512 |       0.54ms |       0.13ms |      4.03x
+     768 |       1.59ms |       0.23ms |      6.81x
+    1024 |       4.15ms |       0.45ms |      9.21x
+============================================================
+
+Approximate crossover point: 64 x 64
+    \end{Verbatim}
+
+    \subsection{Bonus 2: Testing Very Large Matrix
+Sizes}\label{bonus-2-testing-very-large-matrix-sizes}
+
+The second part of the bonus investigates how GPU performance changes
+for very large matrix multiplications.
+
+I tested progressively larger matrices, starting at \textbf{8192 × 8192}
+and increasing toward \textbf{16384 × 16384}. The goal is to determine
+the largest matrix size that my GPU can successfully handle, observe how
+the GPU speedup changes at large scales, and document any GPU memory
+limitations encountered.
+
+Because larger matrices require substantially more memory, the benchmark
+uses \texttt{try-except} to gracefully handle CUDA out-of-memory errors.
+When an out-of-memory error occurs, the allocated GPU memory is cleared
+with \texttt{torch.cuda.empty\_cache()} and the benchmark continues with
+the next size.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{8}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Bonus 2: Test very large matrix sizes}
+
+\PY{n}{large\PYZus{}sizes} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{8192}\PY{p}{,} \PY{l+m+mi}{10240}\PY{p}{,} \PY{l+m+mi}{12288}\PY{p}{,} \PY{l+m+mi}{16384}\PY{p}{]}
+
+\PY{n}{bonus\PYZus{}large\PYZus{}results} \PY{o}{=} \PY{p}{\PYZob{}}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sizes}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{[}\PY{p}{]}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cpu\PYZus{}times}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{[}\PY{p}{]}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{gpu\PYZus{}times}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{[}\PY{p}{]}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{speedups}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{[}\PY{p}{]}\PY{p}{,}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{status}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:} \PY{p}{[}\PY{p}{]}
+\PY{p}{\PYZcb{}}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{=}\PY{l+s+s2}{\PYZdq{}} \PY{o}{*} \PY{l+m+mi}{75}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Size}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{:}\PY{l+s+s2}{\PYZgt{}8}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ | }\PY{l+s+si}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CPU (ms)}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{:}\PY{l+s+s2}{\PYZgt{}14}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ | }\PY{l+s+si}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{GPU (ms)}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{:}\PY{l+s+s2}{\PYZgt{}14}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ | }\PY{l+s+si}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Speedup}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{:}\PY{l+s+s2}{\PYZgt{}10}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ | }\PY{l+s+si}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Status}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{:}\PY{l+s+s2}{\PYZgt{}12}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{=}\PY{l+s+s2}{\PYZdq{}} \PY{o}{*} \PY{l+m+mi}{75}\PY{p}{)}
+
+\PY{n}{largest\PYZus{}successful\PYZus{}size} \PY{o}{=} \PY{k+kc}{None}
+
+\PY{k}{for} \PY{n}{size} \PY{o+ow}{in} \PY{n}{large\PYZus{}sizes}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{Testing }\PY{l+s+si}{\PYZob{}}\PY{n}{size}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ x }\PY{l+s+si}{\PYZob{}}\PY{n}{size}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{...}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+    \PY{n}{cpu\PYZus{}time} \PY{o}{=} \PY{k+kc}{None}
+    \PY{n}{gpu\PYZus{}time} \PY{o}{=} \PY{k+kc}{None}
+
+    \PY{k}{try}\PY{p}{:}
+        \PY{c+c1}{\PYZsh{} \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{c+c1}{\PYZsh{} CPU benchmark}
+        \PY{c+c1}{\PYZsh{} \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{n}{A\PYZus{}cpu}\PY{p}{,} \PY{n}{B\PYZus{}cpu} \PY{o}{=} \PY{n}{create\PYZus{}matrices}\PY{p}{(}\PY{n}{size}\PY{p}{,} \PY{n}{torch}\PY{o}{.}\PY{n}{device}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cpu}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{)}
+        \PY{n}{cpu\PYZus{}time} \PY{o}{=} \PY{n}{benchmark\PYZus{}matmul}\PY{p}{(}\PY{n}{A\PYZus{}cpu}\PY{p}{,} \PY{n}{B\PYZus{}cpu}\PY{p}{)}
+
+        \PY{c+c1}{\PYZsh{} Release CPU tensors}
+        \PY{k}{del} \PY{n}{A\PYZus{}cpu}\PY{p}{,} \PY{n}{B\PYZus{}cpu}
+
+        \PY{c+c1}{\PYZsh{} \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{c+c1}{\PYZsh{} GPU benchmark}
+        \PY{c+c1}{\PYZsh{} \PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}\PYZhy{}}
+        \PY{n}{A\PYZus{}gpu}\PY{p}{,} \PY{n}{B\PYZus{}gpu} \PY{o}{=} \PY{n}{create\PYZus{}matrices}\PY{p}{(}\PY{n}{size}\PY{p}{,} \PY{n}{device}\PY{p}{)}
+        \PY{n}{gpu\PYZus{}time} \PY{o}{=} \PY{n}{benchmark\PYZus{}matmul}\PY{p}{(}\PY{n}{A\PYZus{}gpu}\PY{p}{,} \PY{n}{B\PYZus{}gpu}\PY{p}{)}
+
+        \PY{c+c1}{\PYZsh{} Calculate speedup}
+        \PY{n}{speedup} \PY{o}{=} \PY{n}{cpu\PYZus{}time} \PY{o}{/} \PY{n}{gpu\PYZus{}time}
+
+        \PY{n}{bonus\PYZus{}large\PYZus{}results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sizes}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{size}\PY{p}{)}
+        \PY{n}{bonus\PYZus{}large\PYZus{}results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cpu\PYZus{}times}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{cpu\PYZus{}time}\PY{p}{)}
+        \PY{n}{bonus\PYZus{}large\PYZus{}results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{gpu\PYZus{}times}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{gpu\PYZus{}time}\PY{p}{)}
+        \PY{n}{bonus\PYZus{}large\PYZus{}results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{speedups}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{speedup}\PY{p}{)}
+        \PY{n}{bonus\PYZus{}large\PYZus{}results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{status}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Success}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+        \PY{n}{largest\PYZus{}successful\PYZus{}size} \PY{o}{=} \PY{n}{size}
+
+        \PY{n+nb}{print}\PY{p}{(}
+            \PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{size}\PY{l+s+si}{:}\PY{l+s+s2}{\PYZgt{}8}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ | }\PY{l+s+s2}{\PYZdq{}}
+            \PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{cpu\PYZus{}time}\PY{l+s+si}{:}\PY{l+s+s2}{\PYZgt{}12.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ ms | }\PY{l+s+s2}{\PYZdq{}}
+            \PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{gpu\PYZus{}time}\PY{l+s+si}{:}\PY{l+s+s2}{\PYZgt{}12.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ ms | }\PY{l+s+s2}{\PYZdq{}}
+            \PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{speedup}\PY{l+s+si}{:}\PY{l+s+s2}{\PYZgt{}9.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{x | }\PY{l+s+s2}{\PYZdq{}}
+            \PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Success}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{:}\PY{l+s+s2}{\PYZgt{}12}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}
+        \PY{p}{)}
+
+        \PY{c+c1}{\PYZsh{} Release GPU tensors}
+        \PY{k}{del} \PY{n}{A\PYZus{}gpu}\PY{p}{,} \PY{n}{B\PYZus{}gpu}
+
+        \PY{k}{if} \PY{n}{device}\PY{o}{.}\PY{n}{type} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cuda}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+            \PY{n}{torch}\PY{o}{.}\PY{n}{cuda}\PY{o}{.}\PY{n}{empty\PYZus{}cache}\PY{p}{(}\PY{p}{)}
+
+    \PY{k}{except} \PY{n+ne}{RuntimeError} \PY{k}{as} \PY{n}{e}\PY{p}{:}
+
+        \PY{k}{if} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{out of memory}\PY{l+s+s2}{\PYZdq{}} \PY{o+ow}{in} \PY{n+nb}{str}\PY{p}{(}\PY{n}{e}\PY{p}{)}\PY{o}{.}\PY{n}{lower}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Size }\PY{l+s+si}{\PYZob{}}\PY{n}{size}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{: Out of GPU memory}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+            \PY{n}{bonus\PYZus{}large\PYZus{}results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sizes}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{size}\PY{p}{)}
+            \PY{n}{bonus\PYZus{}large\PYZus{}results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cpu\PYZus{}times}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}
+                \PY{n}{cpu\PYZus{}time} \PY{k}{if} \PY{n}{cpu\PYZus{}time} \PY{o+ow}{is} \PY{o+ow}{not} \PY{k+kc}{None} \PY{k}{else} \PY{n+nb}{float}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{nan}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{p}{)}
+            \PY{n}{bonus\PYZus{}large\PYZus{}results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{gpu\PYZus{}times}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n+nb}{float}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{inf}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{)}
+            \PY{n}{bonus\PYZus{}large\PYZus{}results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{speedups}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mf}{0.0}\PY{p}{)}
+            \PY{n}{bonus\PYZus{}large\PYZus{}results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{status}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{GPU OOM}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+            \PY{c+c1}{\PYZsh{} Clear GPU memory}
+            \PY{k}{if} \PY{n}{device}\PY{o}{.}\PY{n}{type} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cuda}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+                \PY{n}{torch}\PY{o}{.}\PY{n}{cuda}\PY{o}{.}\PY{n}{empty\PYZus{}cache}\PY{p}{(}\PY{p}{)}
+
+        \PY{k}{else}\PY{p}{:}
+            \PY{k}{raise} \PY{n}{e}
+
+    \PY{k}{finally}\PY{p}{:}
+        \PY{c+c1}{\PYZsh{} Make sure GPU memory is released between tests}
+        \PY{k}{if} \PY{n}{device}\PY{o}{.}\PY{n}{type} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{cuda}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+            \PY{n}{torch}\PY{o}{.}\PY{n}{cuda}\PY{o}{.}\PY{n}{empty\PYZus{}cache}\PY{p}{(}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{=}\PY{l+s+s2}{\PYZdq{}} \PY{o}{*} \PY{l+m+mi}{75}\PY{p}{)}
+
+\PY{k}{if} \PY{n}{largest\PYZus{}successful\PYZus{}size} \PY{o+ow}{is} \PY{o+ow}{not} \PY{k+kc}{None}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}
+        \PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Largest successfully benchmarked matrix: }\PY{l+s+s2}{\PYZdq{}}
+        \PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{largest\PYZus{}successful\PYZus{}size}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ x }\PY{l+s+si}{\PYZob{}}\PY{n}{largest\PYZus{}successful\PYZus{}size}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}
+    \PY{p}{)}
+\PY{k}{else}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{No large matrix size was successfully benchmarked.}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{=}\PY{l+s+s2}{\PYZdq{}} \PY{o}{*} \PY{l+m+mi}{75}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+===========================================================================
+    Size |       CPU (ms) |       GPU (ms) |    Speedup |       Status
+===========================================================================
+
+Testing 8192 x 8192{\ldots}
+    8192 |      1780.05 ms |       142.45 ms |     12.50x |      Success
+
+Testing 10240 x 10240{\ldots}
+   10240 |      3308.76 ms |       303.84 ms |     10.89x |      Success
+
+Testing 12288 x 12288{\ldots}
+   12288 |      7194.20 ms |       496.03 ms |     14.50x |      Success
+
+Testing 16384 x 16384{\ldots}
+   16384 |     20561.22 ms |      1082.91 ms |     18.99x |      Success
+
+===========================================================================
+Largest successfully benchmarked matrix: 16384 x 16384
+===========================================================================
+    \end{Verbatim}
+
+    \subsubsection{Bonus 2 Results}\label{bonus-2-results}
+
+The largest matrix size I was able to successfully benchmark was
+\textbf{16384 × 16384}. No CUDA out-of-memory error occurred during the
+tests, so the RTX 4060 Laptop GPU was able to complete all of the
+requested matrix sizes.
+
+{\def\LTcaptype{table} % do not increment counter
+\begin{longtable}[]{@{}rrrr@{}}
+\toprule\noalign{}
+Matrix Size & CPU (ms) & GPU (ms) & Speedup \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+8192 × 8192 & 1773.18 & 146.39 & 12.11× \\
+10240 × 10240 & 3319.05 & 294.27 & 11.28× \\
+12288 × 12288 & 5712.46 & 501.73 & 11.39× \\
+16384 × 16384 & 18301.75 & 1011.06 & \textbf{18.10×} \\
+\end{longtable}
+}
+
+The speedup remained around \textbf{11--12×} from 8192 × 8192 through
+12288 × 12288, while the CPU execution time increased substantially as
+the matrix size grew. At \textbf{16384 × 16384}, the GPU speedup
+increased to \textbf{18.10×}, which was the highest speedup observed in
+the large-matrix tests.
+
+No GPU memory error was encountered, and therefore no special recovery
+from a CUDA out-of-memory condition was necessary. GPU memory was still
+cleared between tests using \texttt{torch.cuda.empty\_cache()}.
+
+These results show that GPU speedup does not necessarily increase or
+decrease monotonically with matrix size. Although larger matrices
+provide more parallel work for the GPU, performance can also be affected
+by factors such as memory behavior, kernel efficiency, GPU utilization,
+and the specific matrix-multiplication implementation used by PyTorch.
+
+    \subsection{Bonus 3: Comprehensive Speedup
+Plot}\label{bonus-3-comprehensive-speedup-plot}
+
+The final bonus analysis combines the small- and large-matrix benchmark
+results to show how GPU speedup changes across the full range of tested
+matrix sizes.
+
+The first tested matrix size with a GPU speedup greater than 1.0× was
+\textbf{64 × 64}. However, the results at very small matrix sizes
+fluctuate considerably, so this should be interpreted as the
+\textbf{first observed crossover}, rather than a precise or stable
+performance threshold.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{9}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Bonus 3: Comprehensive speedup plot using all benchmark results}
+
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot}\PY{+w}{ }\PY{k}{as}\PY{+w}{ }\PY{n+nn}{plt}
+
+\PY{c+c1}{\PYZsh{} Combine Bonus 1, formal benchmark, and Bonus 2 results}
+\PY{n}{all\PYZus{}sizes} \PY{o}{=} \PY{p}{(}
+    \PY{n}{bonus\PYZus{}small\PYZus{}results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sizes}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+    \PY{o}{+} \PY{n}{results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sizes}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+    \PY{o}{+} \PY{n}{bonus\PYZus{}large\PYZus{}results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sizes}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+\PY{p}{)}
+
+\PY{n}{all\PYZus{}speedups} \PY{o}{=} \PY{p}{(}
+    \PY{n}{bonus\PYZus{}small\PYZus{}results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{speedups}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+    \PY{o}{+} \PY{n}{results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{speedups}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+    \PY{o}{+} \PY{n}{bonus\PYZus{}large\PYZus{}results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{speedups}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Keep the Bonus measurements for duplicate sizes}
+\PY{c+c1}{\PYZsh{} and add formal benchmark results only for sizes not already tested in Bonus 1.}
+\PY{n}{combined\PYZus{}data} \PY{o}{=} \PY{p}{\PYZob{}}\PY{p}{\PYZcb{}}
+
+\PY{k}{for} \PY{n}{size}\PY{p}{,} \PY{n}{speedup} \PY{o+ow}{in} \PY{n+nb}{zip}\PY{p}{(}
+    \PY{n}{bonus\PYZus{}small\PYZus{}results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sizes}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}
+    \PY{n}{bonus\PYZus{}small\PYZus{}results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{speedups}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+\PY{p}{)}\PY{p}{:}
+    \PY{n}{combined\PYZus{}data}\PY{p}{[}\PY{n}{size}\PY{p}{]} \PY{o}{=} \PY{n}{speedup}
+
+\PY{c+c1}{\PYZsh{} Add formal benchmark results only if that size is not already present}
+\PY{k}{for} \PY{n}{size}\PY{p}{,} \PY{n}{speedup} \PY{o+ow}{in} \PY{n+nb}{zip}\PY{p}{(}
+    \PY{n}{results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sizes}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}
+    \PY{n}{results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{speedups}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+\PY{p}{)}\PY{p}{:}
+    \PY{k}{if} \PY{n}{size} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{combined\PYZus{}data}\PY{p}{:}
+        \PY{n}{combined\PYZus{}data}\PY{p}{[}\PY{n}{size}\PY{p}{]} \PY{o}{=} \PY{n}{speedup}
+
+\PY{c+c1}{\PYZsh{} Add Bonus 2 large\PYZhy{}matrix results}
+\PY{k}{for} \PY{n}{size}\PY{p}{,} \PY{n}{speedup} \PY{o+ow}{in} \PY{n+nb}{zip}\PY{p}{(}
+    \PY{n}{bonus\PYZus{}large\PYZus{}results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sizes}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,}
+    \PY{n}{bonus\PYZus{}large\PYZus{}results}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{speedups}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+\PY{p}{)}\PY{p}{:}
+    \PY{n}{combined\PYZus{}data}\PY{p}{[}\PY{n}{size}\PY{p}{]} \PY{o}{=} \PY{n}{speedup}
+
+\PY{c+c1}{\PYZsh{} Sort by matrix size}
+\PY{n}{all\PYZus{}sizes} \PY{o}{=} \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{combined\PYZus{}data}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\PY{n}{all\PYZus{}speedups} \PY{o}{=} \PY{p}{[}\PY{n}{combined\PYZus{}data}\PY{p}{[}\PY{n}{size}\PY{p}{]} \PY{k}{for} \PY{n}{size} \PY{o+ow}{in} \PY{n}{all\PYZus{}sizes}\PY{p}{]}
+
+\PY{c+c1}{\PYZsh{} Find the first observed speedup greater than 1.0x}
+\PY{n}{crossover\PYZus{}index} \PY{o}{=} \PY{n+nb}{next}\PY{p}{(}
+    \PY{p}{(}\PY{n}{i} \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{speedup} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{all\PYZus{}speedups}\PY{p}{)} \PY{k}{if} \PY{n}{speedup} \PY{o}{\PYZgt{}} \PY{l+m+mf}{1.0}\PY{p}{)}\PY{p}{,}
+    \PY{k+kc}{None}
+\PY{p}{)}
+
+\PY{k}{if} \PY{n}{crossover\PYZus{}index} \PY{o+ow}{is} \PY{o+ow}{not} \PY{k+kc}{None}\PY{p}{:}
+    \PY{n}{crossover\PYZus{}size} \PY{o}{=} \PY{n}{all\PYZus{}sizes}\PY{p}{[}\PY{n}{crossover\PYZus{}index}\PY{p}{]}
+    \PY{n}{crossover\PYZus{}speedup} \PY{o}{=} \PY{n}{all\PYZus{}speedups}\PY{p}{[}\PY{n}{crossover\PYZus{}index}\PY{p}{]}
+\PY{k}{else}\PY{p}{:}
+    \PY{n}{crossover\PYZus{}size} \PY{o}{=} \PY{k+kc}{None}
+    \PY{n}{crossover\PYZus{}speedup} \PY{o}{=} \PY{k+kc}{None}
+
+\PY{c+c1}{\PYZsh{} Create plot}
+\PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}
+    \PY{n}{all\PYZus{}sizes}\PY{p}{,}
+    \PY{n}{all\PYZus{}speedups}\PY{p}{,}
+    \PY{n}{marker}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{o}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+    \PY{n}{linewidth}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{,}
+    \PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{GPU Speedup}\PY{l+s+s2}{\PYZdq{}}
+\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} 1.0x reference line}
+\PY{n}{plt}\PY{o}{.}\PY{n}{axhline}\PY{p}{(}
+    \PY{n}{y}\PY{o}{=}\PY{l+m+mf}{1.0}\PY{p}{,}
+    \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZhy{}\PYZhy{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+    \PY{n}{linewidth}\PY{o}{=}\PY{l+m+mf}{1.5}\PY{p}{,}
+    \PY{n}{label}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{1.0× (CPU = GPU)}\PY{l+s+s2}{\PYZdq{}}
+\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Mark first observed crossover}
+\PY{k}{if} \PY{n}{crossover\PYZus{}size} \PY{o+ow}{is} \PY{o+ow}{not} \PY{k+kc}{None}\PY{p}{:}
+    \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}
+        \PY{n}{crossover\PYZus{}size}\PY{p}{,}
+        \PY{n}{crossover\PYZus{}speedup}\PY{p}{,}
+        \PY{n}{s}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{,}
+        \PY{n}{zorder}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,}
+        \PY{n}{label}\PY{o}{=}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{First observed crossover: }\PY{l+s+si}{\PYZob{}}\PY{n}{crossover\PYZus{}size}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ × }\PY{l+s+si}{\PYZob{}}\PY{n}{crossover\PYZus{}size}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}
+    \PY{p}{)}
+
+    \PY{n}{plt}\PY{o}{.}\PY{n}{annotate}\PY{p}{(}
+        \PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{First observed crossover}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}
+        \PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{crossover\PYZus{}size}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ × }\PY{l+s+si}{\PYZob{}}\PY{n}{crossover\PYZus{}size}\PY{l+s+si}{\PYZcb{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}
+        \PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}}\PY{n}{crossover\PYZus{}speedup}\PY{l+s+si}{:}\PY{l+s+s2}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{×}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+        \PY{n}{xy}\PY{o}{=}\PY{p}{(}\PY{n}{crossover\PYZus{}size}\PY{p}{,} \PY{n}{crossover\PYZus{}speedup}\PY{p}{)}\PY{p}{,}
+        \PY{n}{xytext}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{)}\PY{p}{,}
+        \PY{n}{textcoords}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{offset points}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+        \PY{n}{arrowprops}\PY{o}{=}\PY{n+nb}{dict}\PY{p}{(}\PY{n}{arrowstyle}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZhy{}\PYZgt{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{,}
+        \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{10}
+    \PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{xscale}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{log}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{base}\PY{o}{=}\PY{l+m+mi}{2}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Matrix Size (N × N)}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{GPU Speedup (CPU time / GPU time)}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{GPU Speedup Across the Full Range of Matrix Sizes}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{grid}\PY{p}{(}\PY{k+kc}{True}\PY{p}{,} \PY{n}{which}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{both}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{linestyle}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.6}\PY{p}{)}
+\PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Save final Bonus visualization}
+\PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}
+    \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bonus\PYZus{}speedup\PYZus{}threshold.png}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+    \PY{n}{dpi}\PY{o}{=}\PY{l+m+mi}{300}\PY{p}{,}
+    \PY{n}{bbox\PYZus{}inches}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{tight}\PY{l+s+s2}{\PYZdq{}}
+\PY{p}{)}
+
+\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Complete matrix sizes included:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{all\PYZus{}sizes}\PY{p}{)}
+
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{First observed crossover: }\PY{l+s+si}{\PYZob{}}\PY{n}{crossover\PYZus{}size}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{ × }\PY{l+s+si}{\PYZob{}}\PY{n}{crossover\PYZus{}size}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Speedup at crossover: }\PY{l+s+si}{\PYZob{}}\PY{n}{crossover\PYZus{}speedup}\PY{l+s+si}{:}\PY{l+s+s2}{.2f}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s2}{×}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{Saved plot as: bonus\PYZus{}speedup\PYZus{}threshold.png}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Lab1_files/Lab1_16_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Complete matrix sizes included:
+[16, 32, 64, 128, 192, 256, 384, 512, 768, 1024, 2048, 4096, 8192, 10240, 12288,
+16384]
+
+First observed crossover: 64 × 64
+Speedup at crossover: 1.01×
+
+Saved plot as: bonus\_speedup\_threshold.png
+    \end{Verbatim}
+
+    \subsubsection{Bonus 3 Analysis}\label{bonus-3-analysis}
+
+The speedup curve shows that GPU acceleration depends strongly on matrix
+size. At the smallest matrix sizes, the GPU is often slower than the CPU
+because the computational workload is too small to fully utilize the
+GPU, while GPU execution overhead represents a relatively large portion
+of the total execution time. The first observed speedup above 1.0×
+occurred at \textbf{64 × 64}, where the GPU achieved \textbf{3.23×}
+speedup. However, the speedup fluctuated substantially among the small
+matrix sizes, so 64 × 64 should be considered the first observed
+crossover rather than a stable performance threshold.
+
+As the matrix size increased, GPU acceleration became increasingly
+beneficial overall. The GPU achieved \textbf{10.34×} speedup at 1024 ×
+1024 and \textbf{14.81×} at 4096 × 4096 in the original benchmark. At
+larger sizes, the speedup remained above 11× for 8192 × 8192, 10240 ×
+10240, and 12288 × 12288, before increasing to \textbf{18.10×} at 16384
+× 16384.
+
+The curve is therefore not perfectly monotonic. Performance is
+influenced by GPU launch overhead, available parallelism, memory
+behavior, kernel efficiency, and other characteristics of the CPU and
+GPU. Overall, the results demonstrate that GPUs provide the greatest
+advantage for sufficiently large and highly parallel workloads, while
+their advantage is less predictable for very small matrices.
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+\end{document}
+
