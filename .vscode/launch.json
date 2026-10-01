@@ -1,0 +1,44 @@
+{
+    "configurations": 
+    [
+        {
+            "name": "COMP395 - Project Tree",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/Tools/Project_tree.py",
+            "args": 
+            [
+                "--mode",
+                "project"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "COMP395 - Detailed Tree",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/Tools/Project_tree.py",
+            "args": 
+            [
+                "--mode",
+                "detailed"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "COMP395 - Full Tree",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/Tools/Project_tree.py",
+            "args": 
+            [
+                "--mode",
+                "full"
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }
+    ]
+}

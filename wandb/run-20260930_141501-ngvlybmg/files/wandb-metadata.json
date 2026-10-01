@@ -1,0 +1,15 @@
+{
+  "os":  "Windows-11-10.0.26300-SP0",
+  "python":  "CPython 3.14.5",
+  "startedAt":  "2026-09-30T21:15:01.094747Z",
+  "program":  "<python with no main file>",
+  "git":  {
+    "remote":  "https://github.com/CharlieWu0788/Deep-Learning.git",
+    "commit":  "ff5d1f5b43a4c94531f421ea7a028a4959380b35"
+  },
+  "email":  "swu2@oxy.edu",
+  "root":  "C:\\Dev\\COMP395",
+  "host":  "Destine",
+  "executable":  "C:\\Dev\\COMP395\\deeplearning_env\\Scripts\\python.exe",
+  "writerId":  "zolgpzwver72980xlx6kseippym4wep8"
+}
