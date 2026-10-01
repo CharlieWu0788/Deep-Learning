@@ -1,0 +1,12 @@
+schema: "classroom50/repo-config/v1"
+classroom: "comp-395-2-deep-learning"
+assignment: "lab-2-breast-cancer-detection"
+owner:
+  username: "CharlieWu0788"
+  id: 147692586
+  accepted_at: "2026-09-28T20:29:07Z"
+source:
+  owner: "AI-at-Oxy"
+  owner_id: 253783941
+  repo: "lab-2-breast-cancer"
+  branch: "main"

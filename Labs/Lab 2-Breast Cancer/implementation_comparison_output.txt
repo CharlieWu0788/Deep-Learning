@@ -1,0 +1,98 @@
+======================================================================
+ 1/3  Lab: gradient descent by hand
+ /c/Dev/COMP395/Labs/Lab 2-Breast Cancer/binary_classification.py
+======================================================================
+Could not save font_manager cache [Errno 13] Permission denied: 'C:\\Users\\admin123\\AppData\\Local\\matplotlib\\fontlist-v3.11.0.json.matplotlib-lock'
+Loading data...
+Training samples: 455
+Test samples: 114
+Features: 30
+
+Testing sigmoid...
+  sigmoid(0) = 0.5000 (should be 0.5)
+  sigmoid(10) = 1.0000 (should be ~1.0)
+
+Training...
+Epoch   0, Loss: 0.0545
+Epoch  10, Loss: 0.0145
+Epoch  20, Loss: 0.0119
+Epoch  30, Loss: 0.0106
+Epoch  40, Loss: 0.0098
+Epoch  50, Loss: 0.0093
+Epoch  60, Loss: 0.0089
+Epoch  70, Loss: 0.0085
+Epoch  80, Loss: 0.0083
+Epoch  90, Loss: 0.0080
+
+Evaluating...
+Training accuracy: 0.9868
+Test accuracy: 0.9912
+
+Plot saved to training_results.png
+C:\Dev\COMP395\Labs\Lab 2-Breast Cancer\binary_classification.py:238: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+
+[1/3  Lab: gradient descent by hand finished in about 16 s]
+
+======================================================================
+ 2/3  PyTorch: nn.Module + torch.optim
+ /c/Dev/COMP395/Labs/Lab 2-Breast Cancer/binary_classification_pytorch.py
+======================================================================
+Could not save font_manager cache [Errno 13] Permission denied: 'C:\\Users\\admin123\\AppData\\Local\\matplotlib\\fontlist-v3.11.0.json.matplotlib-lock'
+Loading data...
+Training samples: 455
+Test samples: 114
+Features: 30
+
+Testing sigmoid...
+  sigmoid(0) = 0.5000 (should be 0.5)
+  sigmoid(10) = 1.0000 (should be ~1.0)
+
+Training...
+Epoch   0, Loss: 0.0545
+Epoch  10, Loss: 0.0145
+Epoch  20, Loss: 0.0119
+Epoch  30, Loss: 0.0106
+Epoch  40, Loss: 0.0098
+Epoch  50, Loss: 0.0093
+Epoch  60, Loss: 0.0089
+Epoch  70, Loss: 0.0085
+Epoch  80, Loss: 0.0083
+Epoch  90, Loss: 0.0080
+
+Evaluating...
+Training accuracy: 0.9868
+Test accuracy: 0.9912
+
+Plot saved to training_results_pytorch.png
+C:\Dev\COMP395\Labs\Lab 2-Breast Cancer\binary_classification_pytorch.py:185: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()
+
+[2/3  PyTorch: nn.Module + torch.optim finished in about 20 s]
+
+======================================================================
+ 3/3  Side-by-side comparison
+======================================================================
+Could not save font_manager cache [Errno 13] Permission denied: 'C:\\Users\\admin123\\AppData\\Local\\matplotlib\\fontlist-v3.11.0.json.matplotlib-lock'
+One-sample gradient check (random w, b)
+  max |dw_hand - dw_autograd| = 1.79e-07
+      |db_hand - db_autograd| = 1.49e-08
+
+                                   Lab       PyTorch
+  Loss, epoch 1               0.054478      0.054478
+  Loss, epoch 100             0.007863      0.007863
+  Training accuracy             0.9868        0.9868
+  Test accuracy                 0.9912        0.9912
+  Training time (s)               2.73         12.05
+
+  max weight difference   = 1.79e-07
+  bias difference         = 8.94e-08
+  max per-epoch loss diff = 8.35e-10
+
+  [PASS] gradients match
+  [PASS] weights match
+  [PASS] bias matches
+  [PASS] loss curves match
+  [PASS] accuracies match
+
+The two implementations learn the same model.

@@ -1,18 +1,58 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
 deeplearning_env/
+.venv/
+venv/
+env/
+ENV/
 
 # Jupyter
 .ipynb_checkpoints/
 
-# Python
-__pycache__/
-*.py[cod]
-*.pyo
+# Testing / coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
 
-# LaTeX build files
+# Weights & Biases
+wandb/
+
+# Model checkpoints / training artifacts
+*.pt
+*.pth
+*.ckpt
+
+# LaTeX auxiliary files
 *.aux
-*.log
 *.out
 *.toc
+*.synctex.gz
 *.fls
 *.fdb_latexmk
-*.synctex.gz
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Build / package artifacts
+build/
+dist/
+*.egg-info/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
