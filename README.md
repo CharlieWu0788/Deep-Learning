@@ -10,6 +10,8 @@ This repository serves as a structured record of coursework completed throughout
 
 ```text
 COMP395/
+├── .github
+│   └── workflows
 ├── .vscode
 ├── Assignments
 │   ├── Assignment 1-Differentiation through multiple representations
@@ -17,6 +19,12 @@ COMP395/
 │   ├── Assignment 2-Partial Derivatives and Gradients
 │   └── Assignment 3-Gradient Descent from Scratch
 │       └── Assignment 3.ipynb
+├── dist
+├── environment
+│   ├── wheels
+│   │   └── README.md
+│   ├── README.md
+│   └── VALIDATION.md
 ├── Justice and Equity
 │   └── Compas Analysis
 │       ├── .gitignore
@@ -36,11 +44,6 @@ COMP395/
 │   ├── Lab 2-Breast Cancer
 │   │   ├── .github
 │   │   │   └── workflows
-│   │   ├── .pytest_cache
-│   │   │   ├── v
-│   │   │   │   └── cache
-│   │   │   ├── .gitignore
-│   │   │   └── README.md
 │   │   ├── report
 │   │   │   ├── README.md
 │   │   │   ├── report.pdf
@@ -63,75 +66,11 @@ COMP395/
 │   └── Lab 3-MLPs on Sonar_Design, Experiment, Report
 │       ├── .github
 │       │   └── workflows
-│       ├── .pytest_cache
-│       │   ├── v
-│       │   │   └── cache
-│       │   ├── .gitignore
-│       │   └── README.md
 │       ├── report
 │       │   ├── report.pdf
 │       │   ├── wandb_train_loss.png
 │       │   └── wandb_val_loss.png
 │       ├── wandb
-│       │   ├── run-20261014_150807-x686e73y
-│       │   │   ├── files
-│       │   │   ├── logs
-│       │   │   └── tmp
-│       │   │       └── code
-│       │   ├── run-20261014_151118-7z63spiz
-│       │   │   ├── files
-│       │   │   │   └── media
-│       │   │   │       ├── images
-│       │   │   │       │   └── training_results_99_67ff575d4983bd744295.png
-│       │   │   │       └── table
-│       │   │   ├── logs
-│       │   │   └── tmp
-│       │   │       └── code
-│       │   ├── run-20261014_195715-kgvbadbf
-│       │   │   ├── files
-│       │   │   │   └── media
-│       │   │   │       └── images
-│       │   │   │           └── training_results_99_17dcd2338cf0da220897.png
-│       │   │   ├── logs
-│       │   │   └── tmp
-│       │   │       └── code
-│       │   ├── run-20261014_195728-5wtuh51j
-│       │   │   ├── files
-│       │   │   │   └── media
-│       │   │   │       └── images
-│       │   │   │           └── training_results_99_7073485d16389eedd889.png
-│       │   │   ├── logs
-│       │   │   └── tmp
-│       │   │       └── code
-│       │   ├── run-20261014_195742-k9liqnck
-│       │   │   ├── files
-│       │   │   │   └── media
-│       │   │   │       └── images
-│       │   │   │           └── training_results_99_5811c128094360af7220.png
-│       │   │   ├── logs
-│       │   │   └── tmp
-│       │   │       └── code
-│       │   ├── run-20261014_195754-ramacqkm
-│       │   │   ├── files
-│       │   │   │   └── media
-│       │   │   │       └── images
-│       │   │   │           └── training_results_99_c16b62e4839645c533dd.png
-│       │   │   ├── logs
-│       │   │   └── tmp
-│       │   │       └── code
-│       │   ├── run-20261014_195808-h3i1g77q
-│       │   │   ├── files
-│       │   │   │   └── media
-│       │   │   │       └── images
-│       │   │   │           └── training_results_99_fa6b5317df6e6cecbd47.png
-│       │   │   ├── logs
-│       │   │   └── tmp
-│       │   │       └── code
-│       │   └── run-20261014_200509-e4xzvoed
-│       │       ├── files
-│       │       ├── logs
-│       │       └── tmp
-│       │           └── code
 │       ├── .gitignore
 │       ├── comparison.py
 │       ├── Documentation Answers.md
@@ -161,7 +100,7 @@ COMP395/
 │   │       └── cameraman.png
 │   ├── Lecture 5-Word Embeddings_Meaning in Numbers
 │   │   └── Lecture 5.ipynb
-│   ├── Lecture 6-RNN
+│   ├── Lecture 6-Recurrent Neural Network
 │   │   ├── Day 1-Companion
 │   │   │   └── Companion.ipynb
 │   │   ├── Day 2-Sentiment
@@ -172,15 +111,6 @@ COMP395/
 │   │           ├── data
 │   │           │   └── spa-eng
 │   │           ├── wandb
-│   │           │   └── run-20261026_160229-myc70tuv
-│   │           │       ├── files
-│   │           │       │   └── media
-│   │           │       │       ├── images
-│   │           │       │       │   └── translation_results_19_17bca466c87e04fcff37.png
-│   │           │       │       └── table
-│   │           │       ├── logs
-│   │           │       └── tmp
-│   │           │           └── code
 │   │           ├── .gitignore
 │   │           ├── README.md
 │   │           ├── seq2seq_translation_wandb.py
@@ -190,21 +120,16 @@ COMP395/
 │   │   ├── attentionisallyouneed.pdf
 │   │   ├── Day 1.ipynb
 │   │   └── Day 2.ipynb
-│   └── Lecture 8-BERT
-│       └── Bert imdb finetune.ipynb
+│   ├── Lecture 8-Bidirectional Encoder Representations from Transformers
+│   │   └── BERT.ipynb
+│   └── Lecture 9-Vision Language Models
+│       ├── aespa-kiss-n-tell.jpg
+│       ├── dog-frisbee.jpeg
+│       └── VLM.ipynb
 ├── Tools
+│   ├── check_environment.py
 │   └── Project_tree.py
 ├── wandb
-│   ├── run-20260930_141501-ngvlybmg
-│   │   ├── files
-│   │   ├── logs
-│   │   └── tmp
-│   │       └── code
-│   └── run-20261026_151354-1hfalpdr
-│       ├── files
-│       ├── logs
-│       └── tmp
-│           └── code
 ├── .gitignore
 ├── LICENSE
 └── README.md

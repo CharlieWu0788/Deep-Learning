@@ -44,8 +44,8 @@ PROJECT_FILES = {
 }
 
 
-# Additional source/data files shown in Detailed Tree mode.
-DETAILED_EXTENSIONS = {
+# Detailed Tree also includes source, data, and configuration files.
+DETAILED_EXTENSIONS = PROJECT_EXTENSIONS | {
     ".tex",
     ".csv",
     ".json",
@@ -61,55 +61,21 @@ DETAILED_EXTENSIONS = {
 }
 
 
-# Generated/cache files hidden from Project and Detailed Tree modes.
-# Full Tree still shows these.
-GENERATED_EXTENSIONS = {
-    ".pyc",
-    ".pyo",
-    ".pyd",
-    ".log",
-    ".aux",
-    ".out",
-    ".toc",
-    ".lof",
-    ".lot",
-    ".fls",
-    ".fdb_latexmk",
-    ".synctex",
-    ".synctex.gz",
-}
-
-
 def should_exclude(path: Path, mode: str) -> bool:
     """Return True if the path should be excluded for the selected mode."""
     if path.is_dir():
-        return path.name in ALWAYS_EXCLUDED_DIRS
+        return path.name in ALWAYS_EXCLUDED_DIRS or (
+            mode == "project" and path.name == ".pytest_cache"
+        )
 
     if path.name in ALWAYS_EXCLUDED_FILES:
         return True
 
-    if mode == "full":
+    if mode == "full" or path.name in PROJECT_FILES:
         return False
 
-    extension = path.suffix.lower()
-
-    if extension in GENERATED_EXTENSIONS:
-        return True
-
-    if mode == "project":
-        return (
-            path.name not in PROJECT_FILES
-            and extension not in PROJECT_EXTENSIONS
-        )
-
-    if mode == "detailed":
-        return (
-            path.name not in PROJECT_FILES
-            and extension not in PROJECT_EXTENSIONS
-            and extension not in DETAILED_EXTENSIONS
-        )
-
-    return False
+    extensions = PROJECT_EXTENSIONS if mode == "project" else DETAILED_EXTENSIONS
+    return path.suffix.lower() not in extensions
 
 
 def print_tree(
@@ -133,6 +99,9 @@ def print_tree(
         connector = "└── " if is_last else "├── "
         print(f"{prefix}{connector}{entry.name}")
 
+        if mode == "project" and entry.name == "wandb":
+            continue
+
         if entry.is_dir():
             extension = "    " if is_last else "│   "
             print_tree(
@@ -152,7 +121,12 @@ def parse_arguments() -> argparse.Namespace:
         "--mode",
         choices=["project", "detailed", "full"],
         default="project",
-        help="Tree detail level.",
+        help=(
+            "project (default) shows course deliverables, hides .pytest_cache, "
+            "and lists wandb by name only. detailed expands both and adds "
+            "source, data, and configuration files. full shows every file "
+            "except entries excluded in all modes."
+        ),
     )
 
     return parser.parse_args()
