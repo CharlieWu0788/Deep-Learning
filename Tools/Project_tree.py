@@ -1,5 +1,6 @@
 from pathlib import Path
 import argparse
+import re
 
 
 # Directories that are never shown in any mode.
@@ -78,6 +79,16 @@ def should_exclude(path: Path, mode: str) -> bool:
     return path.suffix.lower() not in extensions
 
 
+def tree_sort_key(path: Path) -> tuple:
+    """List directories first, then sort names naturally (2 before 10)."""
+    name = path.name.lower()
+    parts = tuple(
+        int(part) if part.isdecimal() else part
+        for part in re.split(r"(\d+)", name)
+    )
+    return path.is_file(), parts, name, path.name
+
+
 def print_tree(
     directory: Path,
     mode: str,
@@ -90,7 +101,7 @@ def print_tree(
             for entry in directory.iterdir()
             if not should_exclude(entry, mode)
         ],
-        key=lambda path: (path.is_file(), path.name.lower()),
+        key=tree_sort_key,
     )
 
     for index, entry in enumerate(entries):

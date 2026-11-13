@@ -35,8 +35,8 @@ COMP395/
 ├── Labs
 │   ├── Lab 1-Introduction to PyTorch and GPU Computing
 │   │   ├── Lab1_files
-│   │   │   ├── Lab1_16_0.png
-│   │   │   └── Lab1_5_0.png
+│   │   │   ├── Lab1_5_0.png
+│   │   │   └── Lab1_16_0.png
 │   │   ├── bonus_speedup_threshold.png
 │   │   ├── cpu_vs_gpu_benchmark.png
 │   │   ├── Lab1.pdf
@@ -84,13 +84,13 @@ COMP395/
 │       ├── test_sonar_mlp.py
 │       └── training_results.png
 ├── Lecture
-│   ├── Lecture 1-Matrix Operations in Pytorch
-│   │   └── Lecture 1.ipynb
-│   ├── Lecture 2-Partial Derivatives and Gradients
-│   │   └── Lecture 2.ipynb
-│   ├── Lecture 3-Gradient Descent from Scratch
-│   │   └── Lecture 3.ipynb
-│   ├── Lecture 4-Convolutional Neural Network
+│   ├── Lecture 01-Matrix Operations in Pytorch
+│   │   └── Matrix Operations.ipynb
+│   ├── Lecture 02-Partial Derivatives and Gradients
+│   │   └── Partial Derivatives and Gradients.ipynb
+│   ├── Lecture 03-Gradient Descent from Scratch
+│   │   └── Gradient Descent.ipynb
+│   ├── Lecture 04-Convolutional Neural Network
 │   │   ├── Day 1-Convolution
 │   │   │   ├── Cameraman.png
 │   │   │   └── Convolution.ipynb
@@ -98,9 +98,9 @@ COMP395/
 │   │       ├── Architecture.ipynb
 │   │       ├── astronaut.png
 │   │       └── cameraman.png
-│   ├── Lecture 5-Word Embeddings_Meaning in Numbers
+│   ├── Lecture 05-Word Embeddings_Meaning in Numbers
 │   │   └── Lecture 5.ipynb
-│   ├── Lecture 6-Recurrent Neural Network
+│   ├── Lecture 06-Recurrent Neural Network
 │   │   ├── Day 1-Companion
 │   │   │   └── Companion.ipynb
 │   │   ├── Day 2-Sentiment
@@ -116,16 +116,18 @@ COMP395/
 │   │           ├── seq2seq_translation_wandb.py
 │   │           ├── translate.py
 │   │           └── translation_results.png
-│   ├── Lecture 7-Transformers
+│   ├── Lecture 07-Transformers
 │   │   ├── attentionisallyouneed.pdf
 │   │   ├── Day 1.ipynb
 │   │   └── Day 2.ipynb
-│   ├── Lecture 8-Bidirectional Encoder Representations from Transformers
+│   ├── Lecture 08-Bidirectional Encoder Representations from Transformers
 │   │   └── BERT.ipynb
-│   └── Lecture 9-Vision Language Models
-│       ├── aespa-kiss-n-tell.jpg
-│       ├── dog-frisbee.jpeg
-│       └── VLM.ipynb
+│   ├── Lecture 09-Vision Language Models
+│   │   ├── aespa-kiss-n-tell.jpg
+│   │   ├── dog-frisbee.jpeg
+│   │   └── VLM.ipynb
+│   └── Lecture 10-Large Language Models
+│       └── LLM.ipynb
 ├── Tools
 │   ├── check_environment.py
 │   └── Project_tree.py
@@ -249,6 +251,20 @@ Lecture notebooks and examples organized by topic.
   - Fine-tuning pretrained BERT-Tiny for IMDB sentiment classification
   - Comparison with RNN and LSTM results, including accuracy and recorded training times
   - Custom review tests involving negation, sarcasm, and changes in sentiment
+
+- **Lecture 9 — Vision Language Models**
+  - Image patch extraction, linear patch embeddings, and patch-similarity visualization
+  - Pretrained DINOv2 vision transformers with register tokens and visualization of image self-attention
+  - Comparisons of attention heads and layers using the dog-frisbee image and a custom group photo
+  - BLIP image captioning and word-specific cross-attention over image patches
+  - Raw attention versus Grad-CAM, including caption-generation failures and the limits of attention as an explanation
+
+- **Lecture 10 — Large Language Models**
+  - Loading pretrained GPT-2 and exploring byte-level BPE tokenization
+  - Greedy text generation, repetitive outputs, and few-shot question-and-answer prompting
+  - Next-token logits, softmax probabilities, and temperature sampling experiments
+  - Top-k and nucleus sampling, with visualization of probability distributions and nucleus sizes
+  - Reflections on generation tradeoffs, model knowledge versus behavior, and the roles of SFT and RLHF
 
 ### Tools
 
